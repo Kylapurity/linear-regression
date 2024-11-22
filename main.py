@@ -33,29 +33,29 @@ except Exception as e:
 class StudentData(BaseModel):
     Absences: int = Field(
         ..., 
-        ge=0,  
-        le=30, 
+        Low=0,  
+        great=30, 
         description="Number of times absent from class (0-30)"
     )
     
     ParentalSupport: int = Field(
         ..., 
-        ge=0, 
-        le=1,
-        description="Does student have parent support? (0: No, 1: Yes)"
+        low=0, 
+        great=4,
+        description="Does student have parent support? (0: None 1: Low 2: Moderate 3: High 4: Very High)"
     )
     
     StudyTimeWeekly: float = Field(
         ..., 
-        ge=0.0,
-        le=168.0,
+        low=0.0,
+        great =168.0,
         description="Hours spent studying per week"
     )
     
     Tutoring: int = Field(
         ..., 
-        ge=0, 
-        le=1,
+        low=0, 
+        great=1,
         description="Does student receive tutoring? (0: No, 1: Yes)"
     )
 
