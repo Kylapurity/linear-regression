@@ -5,10 +5,12 @@ from pydantic import BaseModel, Field
 from typing import Optional
 import pickle
 import numpy as np
+import os
 
 # Create FastAPI app
 app = FastAPI(
-    title="Student Grade Prediction",   # API description
+    title="Student Grade Prediction",   
+    description="Predict student grades based on various factors"
 )
 
 # Allow all origins to access our API
@@ -29,15 +31,13 @@ except Exception as e:
 
 # Define what data we need for prediction
 class StudentData(BaseModel):
-    # Number of times student was absent
     Absences: int = Field(
         ..., 
-        ge=0,  # Must be 0 or more
-        le=30, # Must be 30 or less
+        ge=0,  
+        le=30, 
         description="Number of times absent from class (0-30)"
     )
     
-    # Whether student has parent support
     ParentalSupport: int = Field(
         ..., 
         ge=0, 
@@ -45,7 +45,6 @@ class StudentData(BaseModel):
         description="Does student have parent support? (0: No, 1: Yes)"
     )
     
-    # Hours spent studying per week
     StudyTimeWeekly: float = Field(
         ..., 
         ge=0.0,
@@ -53,15 +52,13 @@ class StudentData(BaseModel):
         description="Hours spent studying per week"
     )
     
-    # Whether student gets tutoring
     Tutoring: int = Field(
         ..., 
-        ge=0,
+        ge=0, 
         le=1,
         description="Does student receive tutoring? (0: No, 1: Yes)"
     )
 
-    # Example values to show users
     class Config:
         schema_extra = {
             "example": {
@@ -76,7 +73,6 @@ class StudentData(BaseModel):
 @app.post("/predict")
 async def predict_grade(student: StudentData):
     try:
-        # Get student data in correct order for model
         features = np.array([[
             student.Absences,
             student.ParentalSupport,
@@ -84,28 +80,38 @@ async def predict_grade(student: StudentData):
             student.Tutoring
         ]])
         
-        # Make prediction
         prediction = model.predict(features)[0]
         
-        # Return prediction and input data
         return {
             "predicted_grade": float(prediction),
             "student_data": student.dict()
         }
     
     except Exception as e:
-        # If something goes wrong, return error
         raise HTTPException(
             status_code=500,
             detail=f"Error making prediction: {str(e)}"
         )
+
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "model_loaded": model is not None
+    }
+
 # Welcome message at homepage
 @app.get("/")
 async def home():
     return {
         "message": "Welcome to the Student Grade Prediction API!",
+        "docs_url": "/docs",
+        "health_check": "/health"
     }
-# Run the API
+
+# Run the API with dynamic port for Render
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
