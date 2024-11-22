@@ -1,6 +1,7 @@
 # Import required libraries
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel, Field
 from typing import Optional
 import pickle
@@ -13,11 +14,10 @@ app = FastAPI(
     description="Predict student grades based on various factors"
 )
 
-# Allow all origins to access our API
+## this allow the testing locally
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins during testing
     allow_methods=["*"],
     allow_headers=["*"],
 )
