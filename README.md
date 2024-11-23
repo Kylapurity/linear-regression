@@ -42,7 +42,7 @@
 ![image](https://github.com/user-attachments/assets/2e17c63b-c419-4433-847a-03eb97265e28)
 
 ### Grade Prediction Page
-![image](https://github.com/user-attachments/assets/a57fa83c-84a4-4684-9992-e7cd0e436918)
+![image](https://github.com/user-attachments/assets/38f16c82-8617-4067-82fd-96bd82ea602f)
 
 
 ### Results Page
