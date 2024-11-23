@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'grade_pred_page.dart';
 
 class GradePage extends StatefulWidget {
-  const GradePage({Key? key}) : super(key: key);
+  const GradePage({super.key});
 
   @override
   State<GradePage> createState() => _GradePageState();
@@ -27,18 +27,32 @@ class _GradePageState extends State<GradePage> {
   }
 
   bool _areFieldsValid() {
-    return _absencesController.text.isNotEmpty &&
-        _parentalSupportController.text.isNotEmpty &&
-        _studyTimeController.text.isNotEmpty &&
-        _tutoringController.text.isNotEmpty;
+    try {
+      if (_absencesController.text.isEmpty ||
+          _parentalSupportController.text.isEmpty ||
+          _studyTimeController.text.isEmpty ||
+          _tutoringController.text.isEmpty) {
+        return false;
+      }
+      
+      // Try parsing the values to check if they're valid numbers
+      int.parse(_absencesController.text);
+      int.parse(_parentalSupportController.text);
+      double.parse(_studyTimeController.text);
+      int.parse(_tutoringController.text);
+      
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   void _showValidationError() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Missing Information'),
-        content: const Text('Please fill in all fields before predicting your grade.'),
+        title: const Text('Invalid Input'),
+        content: const Text('Please enter valid numbers for all fields. Make sure all fields are filled and contain only numbers.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -73,7 +87,8 @@ class _GradePageState extends State<GradePage> {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final predictedGrade = data['predicted_grade'] as double;
+        // Convert the predicted_grade to double explicitly
+        final predictedGrade = double.parse(data['predicted_grade'].toString());
         
         if (!mounted) return;
         
@@ -88,6 +103,7 @@ class _GradePageState extends State<GradePage> {
       }
     } catch (e) {
       setState(() => _isLoading = false);
+      if (!mounted) return;
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -137,7 +153,7 @@ class _GradePageState extends State<GradePage> {
                 const SizedBox(height: 30),
                 TextField(
                   controller: _absencesController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                   decoration: InputDecoration(
                     labelText: 'Absences',
                     border: OutlineInputBorder(
@@ -148,7 +164,7 @@ class _GradePageState extends State<GradePage> {
                 const SizedBox(height: 20),
                 TextField(
                   controller: _parentalSupportController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                   decoration: InputDecoration(
                     labelText: 'Parental Support',
                     border: OutlineInputBorder(
@@ -159,7 +175,7 @@ class _GradePageState extends State<GradePage> {
                 const SizedBox(height: 20),
                 TextField(
                   controller: _studyTimeController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
                   decoration: InputDecoration(
                     labelText: 'Study Time Weekly',
                     border: OutlineInputBorder(
@@ -170,7 +186,7 @@ class _GradePageState extends State<GradePage> {
                 const SizedBox(height: 20),
                 TextField(
                   controller: _tutoringController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                   decoration: InputDecoration(
                     labelText: 'Tutoring',
                     border: OutlineInputBorder(
@@ -200,6 +216,7 @@ class _GradePageState extends State<GradePage> {
                           ),
                         ),
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
