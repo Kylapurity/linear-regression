@@ -88,7 +88,7 @@ class _GradePageState extends State<GradePage> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         // Convert the predicted_grade to double explicitly
-        final predictedGrade = double.parse(data['predicted_grade'].toString());
+        final predictedGrade = double.parse(data['GPA'].toString());
         
         if (!mounted) return;
         
