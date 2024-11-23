@@ -83,7 +83,7 @@ async def predict_grade(student: StudentData):
         prediction = model.predict(features)[0]
         
         return {
-            "predicted_grade": float(prediction),
+            "GPA": float(prediction),
             "student_data": student.dict()
         }
     
