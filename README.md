@@ -1,12 +1,17 @@
 # Student Grade Prediction App - Setup Instructions
 ### SWAGGER UI LINK: https://linear-regression-s6de.onrender.com/docs
 ### MY YOUTUBE LINK: https://youtu.be/fBGNVdkZYMo 
-##  Student Grade Prediction App - Setup Instructions
-#### To run my flutter  you first need to have the main directory file first
+### Data Source Link : https://www.kaggle.com/code/annastasy/predicting-students-grades/input
+##  Student Grade Prediction App 
+#### Mission Statement
+##### My mission is to improve education by leveraging technology.
+###### To achieve this, I developed a Student Performance Tracking App, enabling students to monitor their academic progress and identify areas for improvement.  This innovation enhances learning outcomes and fosters a more personalized and engaging educational experience. By integrating technology into ######   education, I aim to make it more accessible, human-centred, and impactful for students worldwide.
+### Setup Instructions
+#### To run my flutter  you first need to have the main directory file first Student_grade_app
 #### After you are in the main directory file You can run flutter pub get to ensure you have all the dependencies needed to run the app
 #### When all the dependencies are in the pubspec.yaml including the images
 #### Run the flutter run
-#### Then pick the type of emulator you want I will choose Chrome where after getting the HTTP I will use the extension for chrome to run the app in an app simulator 
+#### Then pick the type of emulator you want I will choose Chrome where after getting the HTTP link I will use the extension for Chrome to run the app in an app simulator which is the app extension fro running mobile app.
 #### student_grade_app/
 #### ├── lib/
 #### │   ├── main.dart
@@ -47,7 +52,4 @@
 
 ### Results Page
 ![image](https://github.com/user-attachments/assets/fad40fc2-bcb4-4e42-9fa6-7ad6edd051e6)
-
-
-
 
