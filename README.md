@@ -5,7 +5,7 @@
 ##  Student Grade Prediction App 
 #### Mission Statement
 ##### My mission is to improve education by leveraging technology.
-###### To achieve this, I developed a Student Performance Tracking App, enabling students to monitor their academic progress and identify areas for improvement.  This innovation enhances learning outcomes and fosters a more personalized and engaging educational experience. By integrating technology into ######   education, I aim to make it more accessible, human-centred, and impactful for students worldwide.
+##### To achieve this, I developed a Student Performance Tracking App, enabling students to monitor their academic progress and identify areas for improvement.  This innovation enhances learning outcomes and fosters a more personalized and engaging educational experience. By integrating technology into ######   education, I aim to make it more accessible, human-centred, and impactful for students worldwide.
 ### Setup Instructions
 #### To run my flutter  you first need to have the main directory file first Student_grade_app
 #### After you are in the main directory file You can run flutter pub get to ensure you have all the dependencies needed to run the app
